@@ -1,0 +1,321 @@
+\chapter{Rappresentazione del prodotto, connessione con la struttura fisica organizzativa del sistema}
+\label{sec:capitolo1}
+
+\section{Tipologie di analisi e di sistemi}
+
+Ci sono due tipologie di metodi di studio principali:
+\begin{itemize}
+    \item Analitici
+    \item Di simulazione
+\end{itemize}
+
+Tutti i metodi che vedremo hanno una formula, quindi hanno un parametro po più in entrata e in uscita fornisocono un risultato, questo approccio è un approccio \textit{Analitico}.
+
+Quando il sistema diventa molto complesso gli errori tendono ad essere non più trascurabili, in questo caso occorre utilizzare le \textit{simulazioni}
+
+In tutte le casistiche occorre mantenere la complessitá il più basso possibile, essendo un processo automatico, il limite è quello della complessitá.
+Occorre mettere in atto solamente gil elementi rilevati, senza distorsioni altrimenti lo studio non avrebbe valore.
+Verrá effettuato lo studio di sistemi come:
+\begin{itemize}
+    \item Lineari
+    \item Split
+    \item Merge
+    \item Rietramenti
+    \item Uscenti
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/1.jpg}
+    \caption{Tipologie di sistemi}
+    \label{fig:tipologie_di_sistemi}
+\end{figure}
+
+Verranno effettuati studi con un approccio di scomposizione, nonostante il Network di processi verrá sempre e solo analizzato un processo per volta e verranno infine uniti con tecniche specifiche.
+
+\textit{Stadio}: uno stadio è una composizione del processo che potrebbe essere a singola macchina o \textit{Server} o a macchine parallele, comprende anche la coda in ingresso o \textit{Buffer}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/2.jpg}
+    \caption{Stadio}
+    \label{fig:Stadio}
+\end{figure}
+
+Il sistema di produzione è composto da server + buffer, non è interessante comprendere cosa accade prima e non ci interessa cosa succede dopo.
+
+\begin{equation}
+    \begin{split}
+        CT_s    &= f(CT(i)) \\
+        CT(i)   &= CT_q(i) + E(T_s(i))
+    \end{split}
+\end{equation}
+
+\subsubsection{Definizioni:}
+
+\begin{longtable}{l p{12cm}}
+    \endlastfoot
+    \input{content/chapters/definizioni.tex}
+\end{longtable}
+
+\(CT\) e \(WIP\) sono 2 misure di performance, \(CT\) mi dice quanto tempo sta nel sistema quindi quanto riesco a essere efficiente a livello di tempo, deve essere il più basso possibile, il \(WIP\) deve essere basso perché il \(WIP\) è una misura di quanto è immobilizzato, dato che si vuole vendere il prima possibile, per farlo occorre che sia processato il prima possibile, detenere è molto costoso per me. Dato che \(TH\) è il tasso di uscita, deve essere il più alto possibile. Le 3 grandezze sono legate indissolubilmente, sapendone 2 si può trovare la terza.
+
+\subsubsection{Diversi tipi di Layout di sistema}
+
+\begin{itemize}
+    \item Se i diversi tipi di job hanno una sequenza uguale di serventi per essere prodotti ma con tempi di servizio per ogni servente diverso ho una configurazione o un layout \textit{Linea}
+    \item Se ho poche varianti di Job si ha un \textit{Flowline} oppure un \textit{Flowshop}
+    \item Se si hanno molte varianti si è in presenza di un layout \textit{Jobshop} o \textit{a reparti}
+\end{itemize}
+
+\subsection{Little Law}
+
+\(WIP\), \(CT\), \(TH\) sono dipendenti dal tempo, in momenti diversi si hanno quindi valori diversi, sarebbe più corretto scrivere \(WIP(t)\), \(CT(t)\), \(TH(t)\).
+Per non avere complessitá estrema si studia la situazione nel cosiddetto \textit{stady state} che tradotto significa stato di equilibrio. Il sistema non raggiunge l'equilibrio se non è un sistema \(stazionario\), si osservi la figura:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{images/chapter1/6.jpg}
+    \caption{rappresentazione dello Stady state}
+    \label{fig:stadystate}
+\end{figure}
+
+La linea blu nella figura \ref{fig:stadystate} rappresenta la realtá, il \(WIP\), come le altre grandezze continueranno sempre a variare, quella che si stabilizza è la loro media. in \(t_1\) e \(t_2\) sono diversi istantaneamente ma hanno la medesima media.
+
+\begin{conditions*}
+    WIP, CT, TH     &   determinabili da dati e grandezze osservabili, da tempi di arrivo e da tempi di uscita\\
+    A(t)    &   numero di Job giá arrivati fino all'istante \(t\)\\
+    D(t)    &   numero di Job già usciti fino al tempo \(t\)
+\end{conditions*}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/7.jpg}
+    \caption{Curva di \(\frac{A(t)}{D(t)}\)}
+    \label{fig:curvaAtDt}
+\end{figure}
+
+\begin{equation}
+    \begin{split}
+        CT_i    &= T_D(i)-T_A(i) \forall i \\
+        WIP(t)  &= A(t) - D(t) \forall t
+    \end{split}
+\end{equation}
+
+Occorro però le medie dei valori, quindi per \(CT\):
+
+\begin{equation}
+        CT = \frac{\sum_{i = 1}^{N_{ab}} [T_D(i)-T_A(i)]}{N_{ab}} 
+\end{equation}
+dove \(N_{ab}\) rappresenta il numero di Job arrivati o usciti nel sistema dell'intervallo scelto, \(a\) e \(b\) vengono scelti in modo che il sistema sia vuoto prima dell'istante \(a\) e torni vuoto dopo l'istante \(b\).
+
+Mentre per \(WIP\):
+\begin{equation}\label{eq:wipintegrale}
+    \begin{split}
+        WIP  &= \frac{\int_{a}^{b}  [A(t) - D(t)]\,dt }{b-a} \\
+        \int_{a}^{b}  [A(t) - D(t)]\,dt &= CT*N_{ab}
+    \end{split}
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/8.jpg}
+    \caption{Rappresentazione grafica dell'integrale}
+    \label{fig:integralegrafico}
+\end{figure}
+
+Il secondo integrale dell'equazione \ref{eq:wipintegrale} è valido perchè è possibile vedere l'integrale stesso come somma dei singoli rettangoli in figura \ref{fig:integralegrafico}, dove ogni singolo rettangolo è \(CT_1\) (primo rettangolo in basso), \(CT_2\) (secondo rettangolo) etc.
+
+\[
+    \underbrace{\underbrace{CT_1}_{base} * \underbrace{1}_{altezza}}_{rett. 1} + \underbrace{CT_2 * 2}_{rett. 2} + \ldots
+\]
+
+è possibile quindi riscrivere il \(WIP\) come segue:
+\begin{align*}
+    WIP &= \frac{CT*N_{ab}}{b-a}\\
+        &= CT*\underbrace{\frac{N_{ab}}{b-a}}_{TH=\lambda}
+\end{align*}
+
+\subsubsection{Legge di Little}
+
+Ci ricaviamo quindi la legge di Little:
+
+\begin{equation}\label{eq:littleLaw}
+    \begin{split}
+        WIP &= CT*TH\\
+        CT  &= \frac{WIP}{TH}\\
+        TH  &= \frac{WIP}{CT}
+    \end{split}
+\end{equation}
+La legge di Little vale sempre per i valori medi, se \(TH\) è fissato e aumenta \(CT\) allora anche \(WIP\) deve aumentare, se si riesce ad abbassare il \(WIP\) allora diminuisce anche il \(TH\), a meno che non decresca \(CT\)
+
+Avere quindi un \(TH\) molto elevato non implica avere un \(WIP\) molto elevato, in questo caso anche \(CT\) dovrebbe essere elevato.
+
+Con i modelli di tipo analitico si cerca di capire all'equilibrio qual è la distribuzione di probabilitá che nel sistema ci sia 1 Job, 2 Job, etc...
+Tornando alla curva \ref{fig:integralegrafico} possiamo visualizzare il \(TH\) graficamente:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/th.jpg}
+    \caption{Visualizzazione grafica di TH}
+    \label{fig:thGrafico}
+\end{figure}
+
+il \(TH\) è la pendenza della retta che unisce il numero di Job processati all'istante \(b\) al numero di Job processati all'istante \(a\) iniziale.
+
+\subsubsection{Ricavare le probabilitá di equilibrio per il calcolo delle grandezze studiate}
+
+Si immagina un singolo stadio con un singolo servente e un buffer \(\infty\) con \(\lambda\) corrispondente al tasso di arrivo e \(\mu\) corrispondente al tasso di servizio\footnote{Solitamente si ha quasi paradossalmente \(\lambda = TH\) e non \(\mu = TH\)}, dato che si tratta di tassi occorre convertirli in tempi tramite i reciproci, si ha quindi che \(\frac{1}{\lambda}\) corrisponde al tempo di interarrivo mentre \(\frac{1}{\mu}\) corrisponde al tempo di servizio, entrambi i tempi sono distribuiti esponenzialemnte (\(\sim (exp)\)): la distribuzione esponenziale è fondamentale perchè si tratta di una distribuzione senza memoria, come i sistemi descritti.
+
+\(P_n=Prob{N=n}\), sapere se nel sistema ci siano \(n\) Job è utile perché il \(\lambda\) è uguale al \(TH\), essendo \(TH\) noto, per trovare il \(WIP\) è sufficiente conoscere il valore rimanente.
+
+il \(WIP\) è uguale al valore medio delle probabilitá ovvero:
+
+\begin{equation} \label{eq:wipCtP}
+    \begin{split}
+        WIP &= \sum_{n = 0}^{\infty}(n*P_n)\\
+        CT  &= \frac{WIP}{\lambda}\\
+        P_1 &= \left(1-\frac{\lambda}{u}\right)\left(\frac{\lambda}{u}\right)^n
+    \end{split}
+\end{equation}
+
+\begin{equation}\label{eq:wipdimostrazione}
+    \begin{split}
+        &\underbrace{\sum_{n = 0}^{\infty} P_n = \sum_{n = 0}^{\infty} \underbrace{n(1-u)u^n}_{P_n}}_{WIP}=\\
+        &=(1-u)\sum_{n = 0}^{\infty} n*u^{n-1}*u=\\
+        &=(1-u)u\sum_{n = 0}^{\infty} \underbrace{n*u^{n-1}}_{(A)=\frac{\partial (u^n)}{\partial n}} = \\
+        &=(1-u)u\frac{\partial}{\partial u}\underbrace{\left(\sum_{n = 0}^{\infty} u^n \right)}_{\frac{1}{1-u}}=\\
+        &=(1-u)u \frac{\partial}{\partial u} \left(\frac{1}{1-u}\right)=\\
+        &=\frac{u}{1-u}=\\
+        &=WIP
+    \end{split}
+\end{equation}
+
+\begin{conditions*}
+    (A) &   Conoscere la derivata è utile perché la somma delle derivate è uguale alla derivata della somma
+\end{conditions*}
+
+sostituendo nella \ref{eq:wipdimostrazione} \(u=\frac{\lambda}{\mu}\) abbiamo:
+\begin{equation}
+    \begin{split}
+        WIP &= \frac{u}{1-u} =\\
+        &= \frac{\frac{\lambda}{\mu}}{1-\frac{\lambda}{\mu}}=\\
+        &= \frac{\lambda}{\mu - \lambda}
+    \end{split}
+\end{equation}
+
+a sua volta si sostituisce nella \ref{eq:wipCtP}:
+\begin{equation}\label{eq:ctconseguenza}
+    \begin{split}
+        CT &= \frac{WIP}{CT} =\\
+        &=\frac{\lambda}{\mu-\lambda}*\frac{1}{\lambda}=\\
+        &=\frac{1}{\mu-\lambda}
+    \end{split}
+\end{equation}
+
+dalla \ref{eq:ctconseguenza} ne deriva che \((\mu-\lambda)>0 \implies \mu>\lambda\), nei capitoli successivi verrá illustrato come costruire la funzione di probabilitá.
+
+Nota la probabilitá si può determinare il \(WIP\) perché solitamente il \(TH\) è noto
+
+\subsubsection{Sistema a WIP controllato}
+
+il \(WIP\) in questo caso è noto, le stazioni sono a singolo servente con il tempoo indicato sotto ciascuna stazione.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/9.jpg}
+    \caption{Sistema con WIP noto}
+    \label{fig:sitemaWIPnoto}
+\end{figure}
+
+ricordiamo dalla \ref{eq:littleLaw} come ricavare \(WIP\) e \(TH\), il \(TH_{max}\) si conosce a prescindere in quanto rappresenta la capacitá della \(WK\) più lenta (collo di bottiglia), in questo caso è la seconda stazione con tempo pari a 2h:
+
+\[
+   TH_{max} =  \frac{1}{2}job/h = 0.5job/h
+\]
+
+\textbf{Tentativo 1: \(WIP=1\)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/10.jpg}
+    \caption{Tentativo con \(WIP=1\)}
+    \label{fig:wip1}
+\end{figure}
+
+Il sistema va immediatamente all'equilibrio, non si ha una struttura atipica iniziale.
+\begin{align*}
+    &TH(WIP=1)=\frac{1}{5}job/h\\
+    &CT(WIP=1) = \frac{WIP}{TH} = \frac{1}{\frac{1}{5}} = 5h
+\end{align*}
+
+con \(WIP=1\) non raggiungo mai \(TH_{max}\).
+
+\textbf{Tentativo 2: \(WIP=2\)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/11.jpg}
+    \caption{Tentativo con \(WIP=2\)}
+    \label{fig:wip2}
+\end{figure}
+
+nei primi 7 periodi escono 2 job, non è peró il ritmo di equilibrio, a \(\infty\) invece escono 2 job ogni 5 periodi perciò:
+\begin{align*}
+    &TH_{transitorio}(WIP=2)=\frac{2}{7}job/h\\
+    &TH_{\infty}(WIP=2)=\frac{2}{5}job/h\\
+    &TH(WIP=2)=\frac{2+2n}{7+5n}job/h\\
+    &CT(WIP=2) = \frac{WIP}{TH} = \frac{2}{\frac{2}{5}} = 5h
+\end{align*}
+
+\textbf{Tentativo 3: \(WIP=3\)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/12.jpg}
+    \caption{Tentativo con \(WIP=3\)}
+    \label{fig:wip3}
+\end{figure}
+
+nei primi 9 periodi escono 3 job, non è peró il ritmo di equilibrio, a \(\infty\) invece escono 3 job ogni 6 periodi perciò:
+\begin{align*}
+    &TH_{transitorio}(WIP=3)=\frac{3}{9}\frac{1}{3}job/h\\
+    &TH_{\infty}(WIP=3)=\frac{3}{4}=\frac{1}{2}job/h\\
+    &TH(WIP=3)=\frac{3+3n}{9+6n}job/h\\
+    &CT(WIP=3) = \frac{WIP}{TH} = \frac{3}{\frac{3}{6}} = 6h
+\end{align*}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/13.jpg}
+    \caption{\(TH\) e \(CT\) con \(WIP=3\)}
+    \label{fig:thctwip3}
+\end{figure}
+
+Per un sistema del genere la soluzione più efficiente si ottiene con \(WIP=3\) perché offre \(TH_{max}\), la condizione per raggiungere \(TH_{max}\) è pagare un piccolo aumento di \(CT\), se continuo ad aumentare \(CT\) il \(TH\) non aumenterá perchè è presente un collo di bottiglia.
+
+La stazione 2 ha una media di 2h, il che significa che, presa singolarmente potrebbe avere durate diverse:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/2h.jpg}
+\end{figure}
+
+È quindi necessario studiare i sistemi separatamente come se fossero deterministici, per farlo viene stabilito che:
+\begin{align*}
+    &TH_1=\alpha\\
+    &TH_3=\beta
+\end{align*}
+Nella prima alternativa (1h) si ha:
+\[TH_{u.c.}=0.5\alpha + 0.5\beta\]
+Nella seconda alternativa (3h) si ha:
+\[TH_{u.c.}=0.25\alpha + 0.75\beta\]
+
+La soluzione è quindi la media pesata tra le due alternative:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter1/14.jpg}
+\end{figure}
+È più corretto considerare il caso numero 2 perché si ha un comportamento \textit{veloce} una volta ogni quattro, quindi pesa meno.
+
+\textbf{Tentativo 4: \(WIP=4\)}
+
+Nel primo si ha \(TH=\frac{2}{3}job/h\), nel secondo \(TH=\frac{1}{2}job/h\) perchè in questo caso il caso \(lento\) pesa di più e ci si ritrova un \(TH\) inferiore
+
+
+
