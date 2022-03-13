@@ -47,18 +47,11 @@ Il sistema di produzione è composto da server + buffer, non è interessante com
 \begin{equation}
     \begin{split}
         CT_s    &= f(CT(i)) \\
-        CT(i)   &= CT_q(i) + E(T_s(i))
+        CT(i)   &= CT_q(i) + E(\gls{tsi})
     \end{split}
 \end{equation}
 
-\subsubsection{Definizioni:}
-
-\begin{longtable}{l p{12cm}}
-    \endlastfoot
-    \input{content/chapters/definizioni.tex}
-\end{longtable}
-
-\(CT\) e \(WIP\) sono 2 misure di performance, \(CT\) mi dice quanto tempo sta nel sistema quindi quanto riesco a essere efficiente a livello di tempo, deve essere il più basso possibile, il \(WIP\) deve essere basso perché il \(WIP\) è una misura di quanto è immobilizzato, dato che si vuole vendere il prima possibile, per farlo occorre che sia processato il prima possibile, detenere è molto costoso per me. Dato che \(TH\) è il tasso di uscita, deve essere il più alto possibile. Le 3 grandezze sono legate indissolubilmente, sapendone 2 si può trovare la terza.
+\gls{CT} e \(WIP\) sono 2 misure di performance, \(CT\) mi dice quanto tempo sta nel sistema quindi quanto riesco a essere efficiente a livello di tempo, deve essere il più basso possibile, il \(WIP\) deve essere basso perché il \(WIP\) è una misura di quanto è immobilizzato, dato che si vuole vendere il prima possibile, per farlo occorre che sia processato il prima possibile, detenere è molto costoso per me. Dato che \(TH\) è il tasso di uscita, deve essere il più alto possibile. Le 3 grandezze sono legate indissolubilmente, sapendone 2 si può trovare la terza.
 
 \subsubsection{Diversi tipi di Layout di sistema}
 
@@ -314,8 +307,7 @@ La soluzione è quindi la media pesata tra le due alternative:
 È più corretto considerare il caso numero 2 perché si ha un comportamento \textit{veloce} una volta ogni quattro, quindi pesa meno.
 
 \textbf{Tentativo 4: \(WIP=4\)}
-
-Nel primo si ha \(TH=\frac{2}{3}job/h\), nel secondo \(TH=\frac{1}{2}job/h\) perchè in questo caso il caso \(lento\) pesa di più e ci si ritrova un \(TH\) inferiore
+Nel Primo si ha \(TH=\frac{2}{3}job/h\), nel secondo \(TH=\frac{1}{2}job/h\) perchè in questo caso il caso \(lento\) pesa di più e ci si ritrova un \(TH\) inferiore
 
 
 

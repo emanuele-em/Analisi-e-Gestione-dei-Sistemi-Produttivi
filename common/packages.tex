@@ -22,13 +22,20 @@
 \usepackage{csquotes}
 \usepackage{enumitem} %left align the bulleted points
 \usepackage{geometry}
-%\usepackage{glossaries} % to use acronyms and glossary, it has also glossaries-extra as extension, but commands are different
-\usepackage[%
-    toc, % puts the link in the ToC
-    %record, % to use bib2gls
-    abbreviations, % to load abbreviations / acronyms
-    nonumberlist, % to avoid printing the numbers of the references in the acronyms page
-]{glossaries-extra}
+\usepackage
+[
+    toc,symbols,
+    nomain,
+    nonumberlist,
+    nopostdot
+]{glossaries} % to use acronyms and glossary, it has also glossaries-extra as extension, but commands are different
+% \usepackage[%
+%     toc, % puts the link in the ToC
+%     %record, % to use bib2gls
+%     symbols,
+%     %abbreviations, % to load abbreviations / acronyms
+%     nonumberlist % to avoid printing the numbers of the references in the acronyms page
+% ]{glossaries-extra}
 \usepackage{graphicx}               %  post-script images
 %\usepackage{iwona} % extra fonts, substitute standard ones
 \usepackage{listings} % to insert formatted code

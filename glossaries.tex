@@ -1,22 +1,129 @@
-% for glossary entry
-% @entry{bird,
-%     name={bird},
-%     description = {feathered animal},
-%     see={[see also]{duck,goose}}
-% }
+\newglossaryentry{CT}{
+    name={\ensuremath{CT}},
+    description={Cicle Time, tempo di permanenza di un job nel sistema}
+}
 
-% if this bib file does not work, try using \input{file.tex}
-% where all the \newabbreviation commands have been inserted
-% containing all the definitions
+\newglossaryentry{JOB}{
+    name={\ensuremath{JOB}},
+    description={Unitá da produrre, non è importante capire se si tratta di un prodotto singolo o più prodotti}
+}
 
-% Gls to capitalize first letter
-% GLS for full uppercase
-% for abbreviations also
-% glsxtrshort for abbreviation
-% similar for long, full, and capital configurations, add pl at the end for plurals
-% glsentryshort, long, plural (referred to shorts) must be used when in section titles
-% glslink to allow the link but use a different text (as for href)
+\newglossaryentry{tsi}{
+    name={\ensuremath{T_s(i)}},
+    description={Tempo di servizio o tempo di processo dello stadio \textit{i}, dato che è sempre affetto da variabilitá sará una \textit{variabile casuale}}
+}
 
+\newglossaryentry{etsi}{
+    name={\ensuremath{E(T_s(i))}},
+    description={Si tratta di una media perchè \gls{tsi} è una \textit{variabile casuale}, quindi si considera la media}
+}
 
-% if you want to use also description for the abbreviations/acronyms, you should use bib2gls and define all the entries in a bib file, which is incompatible with Overleaf
-\newacronym{AI}{AI}{artificial intelligence}
+\newglossaryentry{cti}{
+    name={\ensuremath{CT(i)}},
+    description={ Cicle Time di un singolo stadio \textit{i}, dato che il tempo di sistema è una \textit{Variabile Casuale} allora anche il Cicle Time sará una \textit{variabile casuale}}
+}
+
+\newglossaryentry{cts}{
+    name={\ensuremath{CT_s}},
+    description={Cicle Time dell'intero sistema: è una funzione dei \gls{cti}, è la somma dei singoli \gls{cti} solo se si tratta di un sistema lineare}
+}
+
+\newglossaryentry{ctqi}{
+    name={\ensuremath{CT_q(i)}},
+    description={Tempo di attesa o Queue time
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=.4\linewidth]{images/chapter1/3.jpg}
+    \end{figure}}
+}
+
+\newglossaryentry{wip}{
+    name={\ensuremath{WIP}},
+    description={Misura il numero di Job presenti nel sistema in un determinato istante}
+}
+
+\newglossaryentry{wips}{
+    name={\ensuremath{WIP_s}},
+    description={Misura il numero di Job nel sistema in un determinato istante se si considera il sistema intero}
+}
+
+\newglossaryentry{wipi}{
+    name={\ensuremath{WIP_i}},
+    description={Misura il numero di Job nel sistema in un determinato istante se si considera lo stadio \textit{i}}
+}
+
+\newglossaryentry{th}{
+    name={\ensuremath{TH}},
+    description={Throughput, è il tasso di produzione del sistema, è legato alla velocitá della macchina, non è infatti l'inverso del tempo ma più correttamente il numero di Job che escono dal sistema nell'unitá di tempo (i.e. ogni giorno, ogni mese, ogni ora etc.)}
+}
+
+\newglossaryentry{tassoArrivo}{
+    name={\ensuremath{\lambda}},
+    description={Corrisponde spesso al \gls{th} del sistema ma vale per l'ingresso, rappresenta il numero di Job che entrano nel sistema nell'unitá di tempo, quando ho degli split e dei merge semplicemente sommo o divido per una certa percentuale, verrá praticamente sempre assunto che tutto ciò che entra nel sistema deve poi anche uscire quindi spesso \(\lambda\)=\gls{th}}
+}
+
+\newglossaryentry{tassoServizio}{
+    name={\ensuremath{\mu}},
+    description={Tasso di servizio di un servente: è la quantita massima di job che il server riesce a servire nell'unitá di tempo}
+}
+
+\newglossaryentry{utilizzo}{
+    name={\ensuremath{u}},
+    description={rappresenta l'utilizzo e vale \(\frac{\lambda}{\mu}\)}
+}
+
+\newglossaryentry{tempoInterarrivo}{
+    name={\ensuremath{\frac{1}{\lambda}}},
+    description={Tempo di interarrivo, dato che \gls{tassoArrivo} è un tasso, per trovare il tempo occorre calcolarne il reciproco}
+}
+
+\newglossaryentry{tempoServizio}{
+    name={\ensuremath{\frac{1}{\mu}}},
+    description={Tempo di servizio, dato che \gls{tassoServizio} è un tasso, per trovare il tempo occorre calcolarne il reciproco}
+}
+
+\newglossaryentry{workstation}{
+    name={\ensuremath{WK}},
+    description={Workstation / stazione / servente: il contenitore di uno o più servernti/macchine
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=.4\linewidth]{images/chapter1/5.jpg}
+    \end{figure}}
+}
+
+\newglossaryentry{step}{
+    name={\ensuremath{STEP}},
+    description={Coppia di workstation e tempo di processo di quella workstation. 
+    \begin{itemize}
+        \item step(M1,5min)
+        \item step(M2,10min)
+        \item step(M3,8min)
+        \item step(M2,2min)
+    \end{itemize}
+    In questo caso ci sono 4 step ma le workstation sono 3 (M1, M2, M3), sono quindi presenti dei flussi rientranti, non c'è corrispondenza biunivoca tra workstation e step. \textit{N.b.} diversi Job sono dello stesso tipo solo se hanno gli stessi Step, ovvero se hanno lo stesso routing}
+}
+
+\newglossaryentry{routing}{
+    name={\ensuremath{ROUTING}},
+    description={Sequenza di step}
+}
+
+\newglossaryentry{Layout}{
+    name={\ensuremath{LAYOUT}},
+    description={Tutti i Job che passano nel sistema determinano il Layout dello stesso}
+}
+
+\newglossaryentry{At}{
+    name={\ensuremath{A(t)}},
+    description={Numero di Job entranti fino al tempo \textit{t}}
+}
+
+\newglossaryentry{Dt}{
+    name={\ensuremath{A(t)}},
+    description={Numero di Job usciti dal sistema fino al tempo \textit{t}}
+}
+
+\newglossaryentry{Pn}{
+    name={\ensuremath{P_n}},
+    description={\textit(Prob{N=n}) ovvero la probabilitá di avere un numero di job nel sistema pari a \textit{n}}
+}

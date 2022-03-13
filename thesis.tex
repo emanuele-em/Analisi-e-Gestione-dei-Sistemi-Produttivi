@@ -29,8 +29,8 @@
 %\addbibresource{bibliography.bib}
 
 % to load the glossaries, not needed if using bib2gls
-%\input{glossaries.tex}
-%\makeglossaries
+\input{glossaries.tex}
+\makenoidxglossaries
 
 \begin{document}
 
@@ -91,11 +91,10 @@
 % style overrides the global style
 % here we are printing only abbreviations
 % printunsrtglossary if using record, otherwise printglossary is ok
-\paginavuota
-%\printunsrtglossary[style=altlist,title=Acronyms,type=\glsxtrabbrvtype]
-
-% also list of symbols here if needed
-
+% \paginavuota
+\glsaddall
+\printnoidxglossaries% also list of symbols here if needed
+%\printunsrtglossary
 \input{common/post_summary_config.tex}
 
 \mainmatter
