@@ -1,35 +1,35 @@
 \newglossaryentry{CT}{
-    name={\ensuremath{CT}},
+    name={\ensuremath{\bm{CT}}},
     description={Cicle Time, tempo di permanenza di un job nel sistema}
 }
 
 \newglossaryentry{JOB}{
-    name={\ensuremath{JOB}},
+    name={\ensuremath{\bm{JOB}}},
     description={Unitá da produrre, non è importante capire se si tratta di un prodotto singolo o più prodotti}
 }
 
 \newglossaryentry{tsi}{
-    name={\ensuremath{T_s(i)}},
+    name={\ensuremath{ \bm{T_s(i)} }},
     description={Tempo di servizio o tempo di processo dello stadio \textit{i}, dato che è sempre affetto da variabilitá sará una \textit{variabile casuale}}
 }
 
 \newglossaryentry{etsi}{
-    name={\ensuremath{E(T_s(i))}},
+    name={\ensuremath{\bm{E(T_s(i))}}},
     description={Si tratta di una media perchè \gls{tsi} è una \textit{variabile casuale}, quindi si considera la media}
 }
 
 \newglossaryentry{cti}{
-    name={\ensuremath{CT(i)}},
+    name={\ensuremath{\bm{CT(i)}}},
     description={ Cicle Time di un singolo stadio \textit{i}, dato che il tempo di sistema è una \textit{Variabile Casuale} allora anche il Cicle Time sará una \textit{variabile casuale}}
 }
 
 \newglossaryentry{cts}{
-    name={\ensuremath{CT_s}},
+    name={\ensuremath{\bm{CT_s}}},
     description={Cicle Time dell'intero sistema: è una funzione dei \gls{cti}, è la somma dei singoli \gls{cti} solo se si tratta di un sistema lineare}
 }
 
 \newglossaryentry{ctqi}{
-    name={\ensuremath{CT_q(i)}},
+    name={\ensuremath{\bm{CT_q(i)}}},
     description={Tempo di attesa o Queue time
     \begin{figure}[H]
         \centering
@@ -38,52 +38,52 @@
 }
 
 \newglossaryentry{wip}{
-    name={\ensuremath{WIP}},
+    name={\ensuremath{\bm{WIP}}},
     description={Misura il numero di Job presenti nel sistema in un determinato istante}
 }
 
 \newglossaryentry{wips}{
-    name={\ensuremath{WIP_s}},
+    name={\ensuremath{\bm{WIP_s}}},
     description={Misura il numero di Job nel sistema in un determinato istante se si considera il sistema intero}
 }
 
 \newglossaryentry{wipi}{
-    name={\ensuremath{WIP_i}},
+    name={\ensuremath{\bm{WIP_i}}},
     description={Misura il numero di Job nel sistema in un determinato istante se si considera lo stadio \textit{i}}
 }
 
 \newglossaryentry{th}{
-    name={\ensuremath{TH}},
+    name={\ensuremath{\bm{TH}}},
     description={Throughput, è il tasso di produzione del sistema, è legato alla velocitá della macchina, non è infatti l'inverso del tempo ma più correttamente il numero di Job che escono dal sistema nell'unitá di tempo (i.e. ogni giorno, ogni mese, ogni ora etc.)}
 }
 
 \newglossaryentry{tassoArrivo}{
-    name={\ensuremath{\lambda}},
+    name={\ensuremath{\bm{\lambda}}},
     description={Corrisponde spesso al \gls{th} del sistema ma vale per l'ingresso, rappresenta il numero di Job che entrano nel sistema nell'unitá di tempo, quando ho degli split e dei merge semplicemente sommo o divido per una certa percentuale, verrá praticamente sempre assunto che tutto ciò che entra nel sistema deve poi anche uscire quindi spesso \(\lambda\)=\gls{th}}
 }
 
 \newglossaryentry{tassoServizio}{
-    name={\ensuremath{\mu}},
+    name={\ensuremath{\bm{\mu}}},
     description={Tasso di servizio di un servente: è la quantita massima di job che il server riesce a servire nell'unitá di tempo}
 }
 
 \newglossaryentry{utilizzo}{
-    name={\ensuremath{u}},
+    name={\ensuremath{\bm{u}}},
     description={rappresenta l'utilizzo e vale \(\frac{\lambda}{\mu}\)}
 }
 
 \newglossaryentry{tempoInterarrivo}{
-    name={\ensuremath{\frac{1}{\lambda}}},
+    name={\ensuremath{\bm{\frac{1}{\lambda} = T_a}}},
     description={Tempo di interarrivo, dato che \gls{tassoArrivo} è un tasso, per trovare il tempo occorre calcolarne il reciproco}
 }
 
 \newglossaryentry{tempoServizio}{
-    name={\ensuremath{\frac{1}{\mu}}},
+    name={\ensuremath{\bm{\frac{1}{\mu}}}},
     description={Tempo di servizio, dato che \gls{tassoServizio} è un tasso, per trovare il tempo occorre calcolarne il reciproco}
 }
 
 \newglossaryentry{workstation}{
-    name={\ensuremath{WK}},
+    name={\ensuremath{\bm{WK}}},
     description={Workstation / stazione / servente: il contenitore di uno o più servernti/macchine
     \begin{figure}[H]
         \centering
@@ -92,7 +92,7 @@
 }
 
 \newglossaryentry{step}{
-    name={\ensuremath{STEP}},
+    name={STEP},
     description={Coppia di workstation e tempo di processo di quella workstation. 
     \begin{itemize}
         \item step(M1,5min)
@@ -104,26 +104,89 @@
 }
 
 \newglossaryentry{routing}{
-    name={\ensuremath{ROUTING}},
+    name={ROUTING},
     description={Sequenza di step}
 }
 
 \newglossaryentry{Layout}{
-    name={\ensuremath{LAYOUT}},
+    name={LAYOUT},
     description={Tutti i Job che passano nel sistema determinano il Layout dello stesso}
 }
 
 \newglossaryentry{At}{
-    name={\ensuremath{A(t)}},
+    name={\ensuremath{\bm{A(t)}}},
     description={Numero di Job entranti fino al tempo \textit{t}}
 }
 
 \newglossaryentry{Dt}{
-    name={\ensuremath{A(t)}},
+    name={\ensuremath{\bm{A(t)}}},
     description={Numero di Job usciti dal sistema fino al tempo \textit{t}}
 }
 
 \newglossaryentry{Pn}{
-    name={\ensuremath{P_n}},
+    name={\ensuremath{\bm{P_n}}},
     description={\textit(Prob{N=n}) ovvero la probabilitá di avere un numero di job nel sistema pari a \textit{n}}
+}
+
+\newglossaryentry{kendall}{
+    name={\ensuremath{\bm{M/M/1/nMax}}},
+    description={è la notazione di Kendall, i parametri hanno il seguente significato:
+        \begin{itemize}
+           \item \textbf{M}/M/1/nMax = distribuzione dei tempi di interarrivo, M sta per Marcoviano ovvero esponenziale senza memoria\\
+           \item  M/\textbf{M}/1/nMax = distribuzione dei tempi di servizio \\
+            \item M/M/\textbf{1}/nMax = numero di serventi \\
+            \item M/M/1/\textbf{nMax} = numero massimo di job nel sistema, se il buffer è \(\infty\) allora questo parametro è lasciato vuoto 
+        \end{itemize}}
+}
+
+\newglossaryentry{equilibrioSistema}{
+    name={Sistema in equilibrio},
+    description={Il sistema è in equilibrio quando preso un nodo, il numero in ingressi è uguale al numero di uscite quindi quando \(IN=OUT\)}
+}
+
+\newglossaryentry{Stati}{
+    name={Stati},
+    description={Gli stati di un sistema si studiano con dei grafi in cui i nodi rappresentano gli stati del sistema con le informazioni in aggregato:
+    \begin{conditions*}
+        \lambda & tasso di arrivo medio\\
+        \mu & tasso di processo medio \\
+        \frac{1}{\lambda} & tempo medio di interarrivo\\
+        \frac{1}{\mu} & tempo medio di processo\\
+        nMax + 1 & numero di nodi
+    \end{conditions*}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=.7\linewidth]{images/chapter2/2.jpg}
+    \end{figure}
+    }
+}
+
+\newglossaryentry{balkingRate}{
+    name={Balking Rate},
+    description={\(\lambda p_{nMax}\) rappresenta tutti i job che cercano di entrare quando il sistema limitato è saturo, di conseguenza vengono scartati. Rappresenta la domanda persa}
+}
+
+\newglossaryentry{probabilitaSistemaNonSaturo}{
+    name={\ensuremath{\bm{1-p_{nMax}}}},
+    description={probabilità che il sistema non sia saturo}
+}
+
+\newglossaryentry{idletime}{
+    name={Idle Time},
+    description={Tempo in cui il sistema è completamente vuoto o fermo}
+}
+
+\newglossaryentry{busytime}{
+    name={busy time},
+    description={tempo in cui il sistema lavora, in un sistema illimitato corrisponde all'utilizzo \(u\), in un sistema limitato invece, dato che l'utilizzo non ha significato se \(>1\) non è possibile intercambiare i due significati}
+}
+
+\newglossaryentry{lambdaeffettivo}{
+    name={\ensuremath{\bm{\lambda_e}}},
+    description={\(\lambda\) effettivo, considerando il buffer e la macchina separati, se il buffer è limitato allora \(\lambda_e<\lambda\)}
+}
+
+\newglossaryentry{lambdaeffettivomm1}{
+    name={\ensuremath{\bm{\lambda_e^{M/M/1}}}},
+    description={\(\lambda(1-p_{nMax})\)}
 }

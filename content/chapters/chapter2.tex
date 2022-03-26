@@ -1,0 +1,561 @@
+\chapter{Modelli Analitici}
+\label{sec:modellianalitici}
+
+\section{Definizioni Generali}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/1.jpg}
+    \caption{Singolo statio, singolo servente}
+    \label{fig:singolostadiosingoloservente}
+\end{figure}
+
+Nel caso di singolo stadio a singolo servente i casi possibili sono 2: buffer limitato o buffer \(\infty\). Lo stato dl sistema è dato dalla variabile casuale \(N\) che corrisponde al numero di job nel sistema. Si assume che tutti i tempi cioè tempo di interarrivo e tempo di servizio siano distribuiti esponenzialmente. Occorre sapere tutti i job nel sistema che corrisponde sia buffer sia macchina.
+
+\(N={0,1,2,...,\infty}\) nel caso di buffer limitato
+
+\(N={0,1,2,...,n,...,nMax}\) nel caso di buffer limitato, il buffer ha quindi capacitá massima pari a \(nMax-1\), perchè nel servente  è presente un job.
+
+\subsection{Notazione di Kendall}
+
+è espressa nel seguente modo: \textit{M/M/1/nMax} dove:
+\begin{itemize}
+    \item \textbf{M}/M/1/nMax = distribuzione dei tempi di interarrivo, M sta per Marcoviano ovvero esponenziale senza memoria\\
+    \item  M/\textbf{M}/1/nMax = distribuzione dei tempi di servizio \\
+     \item M/M/\textbf{1}/nMax = numero di serventi \\
+     \item M/M/1/\textbf{nMax} = numero massimo di job nel sistema, se il buffer è \(\infty\) allora questo parametro è lasciato vuoto 
+ \end{itemize}
+
+ La notazione di kendall si riferisce alla singola coda, non funziona per le reti intere. Se il sistema è saturo, nel caso di buffer limitato, il job che vuole entrare viene scartato, è quindi un ordine perso e se ne deve tenere conto.
+
+ \subsection{Grafi e Metodi operativi di risoluzione}
+
+ Gli stati vengono studiati con dei grafi in cui i nodi rappresentano gli stati del sistema con le informazioni in aggregato
+
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/2.jpg}
+    \caption{Grafo degli stati}
+    \label{fig:grafostati}
+\end{figure}
+
+\begin{conditions*}
+    \lambda & tasso di arrivo medio\\
+    \mu & tasso di processo medio \\
+    \frac{1}{\lambda} & tempo medio di interarrivo\\
+    \frac{1}{\mu} & tempo medio di processo\\
+    nMax + 1 & numero di nodi
+\end{conditions*}
+
+\subsubsection{Equilibrio}
+
+Per ogni nodo il flusso in ingresso deve coincidere con il flusso in uscita, per ogni nodo intermedio si osservino che le frecce entranti in alto a sinistra e in basso a destra e le frecce uscenti in basso a sinistra e in alto a destra. il tasso di arrivo in ogni nodo intermedio è quindi dato dalla somma tra quello in alto a sinistra e quello in basso a destra
+\[
+    p_{n-1}\times \lambda + p_{n+1}\times\mu = IN
+\]
+mentre in uscita\[p_{n}\times \lambda + p_{n}\times\mu = OUT\] Se il sistema è in \textit{equilibrio} allora \(OUT=IN\) di conseguenza:
+
+\begin{equation}
+    p_{n-1}\times \lambda + p_{n+1}\times\mu = p_{n}\times \lambda + p_{n}\times\mu
+\end{equation}
+
+e vale per ogni \(n=1,2,...,nMax-1\), per i nodi estremi invece, dato che non ho predecessori in \(0\) e non ho successori in \(nMax\) avrò rispettivamente in 0
+\[ p_0 \times \lambda = p_1 \times \mu \]
+e in \(nMax\):
+\[p_{nMax-1}\times\lambda = p_{nMax}\times\mu\]
+Le incognite sono le probabilitá di stato \[p_0,p_1,...,p_n,p_{nMax}\]
+
+l'equazione di normalizzazione è \[ \sum_{n = 0}^{nMax} p_n=1 \]
+quando si ha \((nMax+1)\) incognite e \((nMax+2)\) equazioni quindi si ha un sistema sovranormalizzato, occorre scartare un equazione che non può essere quella di normalizzazione. Si sceglie di eliminare un'equazione, si risolve il sistema e si trovano le probabilitá. Essendo il sistema limitato in uesto caso è possibile risolverlo in modo numerico ma solitamente è preferibile risolverlo in modo parametrico, lasciando indicati \(\mu\) e \(\lambda\)
+
+\subsubsection{Esempio}
+
+\subsubsection{Metodo di isolamento dei nodi}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/3.jpg}
+\end{figure}
+\[
+\begin{cases}
+    p_0\lambda=p_1\mu\\
+    p_0\lambda+p_2\mu = p_1\lambda+p_1\mu\\
+    p_1\lambda+p_3\mu = p_2\lambda+p_2\mu\\
+    p_0 + p_1 + p_2 + p_3 = 1
+\end{cases}
+\]
+si risolve e si trova
+\[
+\begin{cases}
+    p_1=\left(\frac{\lambda}{\mu}\right)p_0\\
+    p_2=\left(\frac{\lambda}{\mu}\right)^2p_0\\
+    p_3=\left(\frac{\lambda}{\mu}\right)^3p_0\\
+    p_0 + p_1 + p_2 + p_3 = 1
+\end{cases}
+\]
+sostituendo nell'equazione di normalizzazione:
+\[
+    p_0 + \left(\frac{\lambda}{\mu}\right)p_0 + \left(\frac{\lambda}{\mu}\right)^2p_0 + \left(\frac{\lambda}{\mu}\right)^3p_0 = 1
+\]
+
+si trovano i parametri:
+
+\begin{align*}
+    WIP_s &= \sum_{n = 0}^{nMax}  p_nn = 0\times p_0 + 1\times p_1 + 2\times p_2 + 3\times p_3\\
+    CT_s &= \frac{WIP_s}{TH_s}
+\end{align*}
+\( TH=\lambda \) in questo caso non vale, infatti:
+
+\[ TH_s=\lambda-\lambda p_3 = \lambda(1-p_3) \]
+
+\begin{conditions*}
+    \lambda p_3 & tutti i job che arrivano quando il sistema è saturo, è la domanda persa: balking rate\\
+    (1-p_3) & probabilitá che il sistema non sia saturo (\(p_3\)) e che quindi si possa ancora entrare
+\end{conditions*}
+\(\lambda=5\frac{job}{h}\)\\
+\(\mu=4\frac{job}{h}\)\\
+Se il sistema non fosse limitato sarebbe un problema perchè ne processerebbe meno del numero di entranti, il sistema arriverebbe all'\(\infty\)
+
+\(nMax=3 job\)
+
+\(TH\) giornaliero = ?
+
+\% job persi al giorno = ?
+
+\% del tempo in cui il sistema è idle = ?
+
+\% busy time = ?
+
+\begin{align*}
+    p_0 &= \frac{1}{1+\frac{\lambda}{\mu}+\left(\frac{\lambda}{\mu}\right)^2 + \left(\frac{\lambda}{\mu}\right)^3} =\\
+    &= \frac{1}{1+\frac{5}{4}+\left(\frac{5}{4}\right)^2 + \left(\frac{5}{4}\right)^3} = 0.1734\\
+    p_3 &= \left(\frac{\lambda}{\mu}\right)^3p_0 = 0.3387\\
+    TH_s &= \underbrace{\lambda - \lambda p_3}_{\lambda_e} =\\
+    &= 5 - 5\times 0.3387 = 3.3065 \frac{job}{h} \rightarrow\\
+    &\rightarrow 3.3065\times 24 = 79.356 \frac{jobs}{giorno}\\
+    \text{Job persi} &= \lambda\times p_3 =\\
+    &= 5\times 0.3387 = 1.6935 \rightarrow\\
+    &\rightarrow 1.6935\times 24 = 40.644 \frac{jobs}{giorno}
+\end{align*}
+\begin{align*}
+    &\text{\% job persi al giorno} = (120:100=40.644:x ) \rightarrow \frac{40.644\times 100}{120}=33.87\%\\
+    &\text{\% idle time} = \text{tempo in cui il sistema non sta facendo nulla} = p_0 = 0.173 \rightarrow 17.3\%\\
+    &\text{\% busy time} = \text{tempo in cui il sistema lavora} = 1-p_0 = 1-0.173 \rightarrow 82.70\%
+\end{align*}
+a questo punto è possibile determinare il \(WIP\):
+\begin{align*}
+    &WIP_s = 0\times 0.173 + 1\times 0.217 + 2\times 0.272 + 3\times 0.339 = 1.776 job\\
+    &CT_s = \frac{WIP_s}{TH} = \frac{1.776}{3.306} = 0.537 giorni \rightarrow \text{La permanenza media è un po'più di mezza giornata}
+\end{align*}
+
+\subsubsection{Metodo di separazione}
+È possibile trovare le equazioni con un metodo alternativo all'isolamento dei nodi, chiamato metodo dei tagli o della saparazione:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/4.jpg}
+    \caption{Metodo della separazione}
+    \label{fig:metodoSeparazione}
+\end{figure}
+Si taglia il grafo come in figura e si osservano tutte le frecce che attraversano i tagli da sinistra a destra e poi da destra a sinistra:
+\[
+  \begin{cases}
+      \lambda p_0 = \mu p_1\\
+      \lambda p_1 = \mu p_2\\
+      \lambda p_2 = \mu p_3\\
+      p_0 + p_1 + p_2 + p_3 = 1
+  \end{cases}  
+\]
+la regola da seguire è: \textit{frecce sx\(\rightarrow\)dx = frecce dx\(\rightarrow\)sx}
+
+si risolve quindi tramite metodo di sostituzione:
+\[
+\begin{cases}
+    p_1=\left(\frac{\lambda}{\mu}\right)p_0\\
+    p_2=\left(\frac{\lambda}{\mu}\right)^2p_0\\
+    p_3=\left(\frac{\lambda}{\mu}\right)^3p_0\\
+    p_0 + p_1 + p_2 + p_3 = 1
+\end{cases}
+\]
+a seconda della tipologia del grafo può convenire il metodo dell'\textit{isolamento dei nodi} piuttosto che il metodo della \textit{separazione}
+
+\subsubsection{Metodi a confronto}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/5.jpg}
+\end{figure}
+Tramite \textit{Isolamento dei nodi} [\textit{FLUSSO IN = FLUSSO OUT}]:
+
+\[\lambda p_0 + \mu p_2 = \lambda p_1 + \mu p_1\]
+Tramite \textit{Separazione} [\textit{FRECCE sx\(\rightarrow\)dx = FRECCE dx\(\rightarrow\)sx}]:
+
+\[\lambda p_2 = \mu p_3\]
+Ogni taglio deve separare i nodi in due insiemi e devono essere scelti in modo da definire tutte le probabilitá
+
+\subsection{M/M/1/nMax}
+
+\begin{align*}
+    u &= \frac{\lambda}{\mu}\\
+    p_n &= u^np_0\\
+    p_0 &= \frac{1}{\sum_{n=0}^{nMax}u^n}\\
+\end{align*}
+sviluppiamo \(\sum_{n=0}^{nMax}u^n\):
+
+\[
+    \sum_{n=0}^{nMax}u^n = \frac{1-u}{1-u}\sum_{n=0}^{nMax}u^n
+\]
+sapendo che:
+
+\begin{align*}
+    (1-u)\sum_{n=0}^{nMax}u^n &= (1-u)(1+u+u^2+...+u^{nMax}) =\\
+                              &= 1 + \bcancel{u} +  \bcancel{u^2} + ... + \bcancel{u^nMax} - \bcancel{u}- \bcancel{u^2} - ... - \bcancel{u^{nMax}} - u^{nMax+1} =\\
+                              &= 1-u^{nMax+1}
+\end{align*}
+Tornando all'equazione iniziale si aggiunge \(\frac{1}{1-u}\):
+\[
+    \frac{1-u^{nMax+1}}{1-u} = \sum_{n=0}^{nMax}u^n 
+\]
+Si torna quindi a \(p_0\) da dove si è partiti:
+\begin{align*}
+    p_0&=\frac{1}{\sum_{n=0}^{nMax}u^n} =\\
+        &=\frac{1}{\frac{1-u^{nMax+1}}{1-u}} =\\
+        &=\frac{1-u}{1-u^{nMax + 1}}
+\end{align*}
+sostituendo nuovamente \(u=\frac{\lambda}{\mu}\) si trova:
+\begin{equation}
+    p_0 = \frac{1-\frac{\lambda}{\mu}}{1-\left(\frac{\lambda}{\mu}\right)^{nMax+1}}
+\end{equation}
+Si trovano quindi gli altri parametri:
+\begin{align}
+    &P_n = \left(\frac{\lambda}{\mu}\right)^np_0 = \frac{\left(\frac{\lambda}{\mu}\right)^n\left(1-\frac{\lambda}{\mu}\right)}{\left(1-\frac{\lambda}{\mu}\right)^{nMax+1}} = \frac{u^n(1-u)}{1-u^{nMax+1}} = \frac{u^n-u^{n+1}}{1-u^{nMax+1}}\\
+    &WIP_j = \sum_{n=0}^{nMax}np_n=\sum_{n=0}^{nMax}n\left[\frac{u^n-u^{n+1}}{1-u^{nMax+1}}\right]\\
+    &TH_s = \lambda_e = \lambda(1-p_ {nMax})\\
+    &CT_s = \frac{WIP_s}{TH_s}
+\end{align}
+Si noti che se \(u=1\) allora le probabilitá sarebbero \(\infty\), è quindi possibile semplificare avendo tutte le probabilitá uguali tra loro:
+\[
+\begin{cases}
+    \lambda p_0 = \mu p_1\\
+    \lambda p_1 = \mu p_2\\
+    \lambda p_n = \mu p_{n+1}\\
+    \lambda p_{nMax-1} = \mu p_{nMax}\\
+    \sum p_n=1
+\end{cases}    
+\]
+sapendo che \(\lambda=\mu\):
+\[
+\begin{cases}
+     p_0 =  p_1\\
+     p_1 =  p_2\\
+     p_n =  p_{n+1}\\
+     p_{nMax-1} =  p_{nMax}\\
+    \sum p_n=1
+\end{cases}    
+\]
+quindi \(p_0 = \frac{1}{nMax+1}=\frac{1}{\text{numero nodi}+1} = p_1 = p_n = p_{nMax} \forall n=0...nMax\)
+
+\subsection{M/M/1}
+
+si ricorda che \(M/M/1 = M/M/1/\infty\)
+
+Cosa cambia se il buffer ha capacitá \(\infty\)? 
+\begin{align*}
+    &TH = \lambda_e\\
+    &\lambda_e = \lambda
+\end{align*}
+
+se \(\lambda>\mu\) ci si trova questa volta nella situazione in cui il sistema non si stabilizza mai e non raggiunge mai il caso tipico poiché il buffer si allungherebbe all'\(\infty\).
+
+Quando \(\lambda=\mu\) il sistema si stabilizza solo se si tratta di un sistema deterministico, in presenza di variabilitá infati il sistema risulterebbe comunque instabile.
+
+Quando \[ \lambda\ll \mu \Rightarrow  u<1 \Rightarrow TH=\lambda \]
+La soluzione è quindi molto più semplice del caso \(M/M/1/nMax\), risolvibile con un sistema chiuso.
+
+A differenza del caso nella sezione precedente, questa volta lo schema presenta un numero \(\infty\) di stati:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/6.jpg}
+    \caption{M/M/1}
+\end{figure}
+si agisce tramite separazione trovando i seguenti sistemi:
+\[
+\begin{cases}
+    \lambda p_0 = \mu p_1\\
+    \lambda p_1 = \mu p_2\\
+    \vdots \\
+    \lambda p_n = \mu p_{n+1}\\
+    \vdots \\
+    \sum p_n=1
+\end{cases}
+\]
+esplicitando le probabilitá si ottiene:
+\[
+\begin{cases}
+    p_1 = \frac{\lambda}{\mu}p_0\\
+    p_2 = \frac{\lambda}{\mu}p_1 = \left(\frac{\lambda}{\mu}\right)^2p_0\\
+    \vdots \\
+    p_n = \left(\frac{\lambda}{\mu}\right)^np_0\\
+    \vdots \\
+    \sum p_n=1
+\end{cases}
+\]
+effettuando la sostituzione \(u=\frac{\lambda}{\mu}\)
+\[p_n=u^np_0\]
+Si trova ora l'utilizzo \(u\):
+\begin{align*}
+    &\sum_{n = 0}^{\infty}  u^np_0 = p_0\sum_{n = 0}^{\infty}  u^n = 1 \rightarrow\\
+    &\rightarrow p_0\frac{1}{1-u}=1 \rightarrow \\
+    &\rightarrow p_0 = 1-u \rightarrow \\
+    &\rightarrow u=1-p_0
+\end{align*}
+di conseguenza \(u\) è pari alla probabilitá che il sistema non sia vuoto.
+
+affermare che \(u>0\) non ha significato reale ma solo matematico, è giustificabile solo perchè esiste un buffer, il massimo \(u\) reale è infatti il 100\%, nel caso in cui \(u>100\%\) allora la coda si allungherebbe all'\(\infty\), in quel caso il sistema andrebbe chiuso buttando via della domanda e utilizzando il sistema al suo limite del 100\% con le regole del caso \(M/M/1/nMax\).
+
+\(\frac{1}{\lambda}\) = tempo medio di interarrivo = \(T_a\) quindi, dato che \(T_a\) è una variabile casuale si considera il suo valore atteso \(E[T_a]=\frac{1}{\lambda}\), allo stesso modo \(T_s\) ovvero il tempo di servizio, essendo una variabile casuale si considera il suo valore atteso \(E[T_s]=\frac{1}{\mu}\), è noto che \[E[T_s]>E[T_a]\] che può essere scrittob\[u=\frac{E[T_s]}{E[T_a]}\] e con tutte le varianti del caso componendo i simboli \(\lambda\), \(\mu\) e \(u\).
+
+Il consiglio  è quello di convertire tutti i tempi in tassi e calcolare l'utilizzo \(u\).
+
+Si calcolano ora gli indici di performance:
+
+\begin{align*}
+    &WIP_s^{M/M/1} = \sum_{n=0}^{\infty}np_n=\frac{u}{1-u}\\
+    &CT_s^{M/M/1} = \frac{WIP_s}{TH_s} = \frac{1}{\mu-\lambda}\\
+    &CT_q^{M/M/1} = CT_s-E[T_s] = \frac{u}{1-u}E[T_s]\\
+    &WIP_q^{M/M/1} = CT_q \times TH_s
+\end{align*}
+
+si dimostri che \(WIP_q=u\), relazione sempre vera perchè \(WIP_q\) è il numero di job che attraversano il processo:
+\[
+  WIP_q=0\times p_{idle} + 1\times p_{busy} = 0\times p_0 + 1\times \underbrace{(1-p_0)}_{u} = 0 + 1\times u = u  
+\]
+quando è busy ci sará 1 solo pezzo, quando è idle il sistema sará vuoto. In media si ha la probabilitá di lungo periodo che sia occupato e quella probabilitá corrisponde esattamente all'\(u\) della \(WK\), se si hanno più serventi in parallelo allora l'\(u\) della \(WK\) e l'\(u\) della singola macchina avranno due valori differenti
+
+\subsection{M/M/m con serventi identici}
+
+in questo caso si hanno più serventi dentro un singolo stadio come in figura:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/8.jpg}
+    \caption{M/M/m}
+\end{figure}
+
+\begin{conditions*}
+    \lambda & tasso medio di arrivo\\
+    \frac{1}{\lambda} & \(E[T_a]\)\\
+    T_a & ha una distribuzione esponenziale\\
+    T_s & distribuzione esponenziale\\
+    \mu & tasso medio di servizio per ogni risorsa (identici)\\
+    \frac{1}{\mu} & \(E[T_s] \forall \text{risorsa}\)
+\end{conditions*}
+Bisogna capire quanto vale il tasso medio di servizio della intera \(WK\), dato che si tratta di unitá identiche il tasso di servizio della \(WK\) è \(m\times \mu\) cioè il tasso di servizio delle singole macchine moltiplicato al numero di macchine
+
+\subsubsection{esempio sistema M/M/3}
+
+\(\mu=5 \frac{job}{h}\) mentre \(E[T_s]=\frac{1}{\mu}=0.2h\), \(\mu_{stazione}=m*\mu_{macchina}=m\times\mu=15\frac{job}{h}\). \(\frac{1}{\mu_{stazione}}=\frac{1}{15}h=\frac{0.2}{3}h\) quindi è come se, avendo più macchine, ci mettesse meno tempo, come se ne uscisse una ogni \textit{meno tempo}. Si vedano le \(WK\) come se avessero una singola macchina che processa \(m\) volte più velocemente, è un'ipotesi poco realistica ma utile come rappresentazione. Gli stati in questo caso possono essere rappresentati dai soli nodi nel sistema
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/9.jpg}
+\end{figure}
+Nei primi due stati dato che si hanno meno di 3 job nel sistema non è possibile avere un tasso di \(3\mu\), dal terzo job in poi nel sistema allora le 3 macchine lavorano contemporaneamente.
+
+È possibile calcolare la probabilitá con il metodo della separazione:
+
+\[
+\begin{cases}
+    \lambda p_0 = \mu p_1\\
+    \lambda p_1 = 2\mu p_2\\
+    \lambda p_2 = 3\mu p_3\\
+    \lambda p_3 = 3\mu p_4\\
+    \lambda p_4 = 3\mu p_5\\
+    \vdots \\
+    \lambda p_n = 3\mu p_{n+1}\\
+    \sum p_n=1
+\end{cases}
+\]
+dal quale si ricava
+\[
+\begin{cases}
+    p_1 = \left(\frac{\lambda}{\mu}\right)p_0\\
+    p_2 = \left(\frac{\lambda}{2\mu}\right)p_1=\frac{1}{2}\left(\frac{\lambda}{\mu}\right)^2p_0\\
+    p_3 = \left(\frac{\lambda}{3\mu}\right)p_2=\frac{1}{2}\frac{1}{3}\left(\frac{\lambda}{\mu}\right)^3p_0\\
+    p_4 = \frac{1}{2}\frac{1}{3^2}\left(\frac{\lambda}{\mu}\right)^3p_0\\
+    \vdots \\
+    p_n = \frac{1}{2}\frac{1}{3^{n-2}}\left(\frac{\lambda}{\mu}\right)^np_0\\
+    \sum p_n=1
+\end{cases}
+\]
+partendo quindi da:
+\begin{align*}
+    p_n &= \frac{1}{2}\frac{1}{3^{n-2}}\left(\frac{\lambda}{\mu}\right)^np_0 =\\
+        &= \frac{3^2}{3^n}\frac{1}{2}\left(\frac{\lambda}{\mu}\right)^np_0
+\end{align*}
+si raccolgono i termini con esponente \(n\):
+\[
+    \frac{3^2}{2}\left(\frac{\lambda}{3\mu}\right)^np_0
+\]
+si ottiene che \(u=\frac{\lambda}{3\mu}\) dato che appunto si tratta di un sistema \(M/M/3\), è quindi possibile alleggerire ulteriormente:
+\[
+    p_n=\frac{3^2}{2}u^np_0    
+\]
+ma questo vale solo per \(n=2...\infty\), dall'equazione di normalizzazione \(\sum_{n=0}^{\infty} p_n=1\) otteniamo che
+\[
+  p_0+p_1+  \sum_{n=2}^{\infty} (\frac{3^2}{2}u^np_0) = p_0 + 3up_0+\frac{9}{2}p_0\sum_{n=0}^{\infty} u^n
+\]
+dato che \(u<1\) significa che il sistema è stabile, dato che la sommatoria parte da 2 utilizziamo la tecnica secondo cui
+\[\sum_{n=0}^{\infty} u^n - \sum_{n=0}^{1} u^n = \frac{1}{1-u}-u^0-u^1\]
+di conseguenza
+\[p_0+3up_0+\frac{9}{2}\left(\frac{1}{1-u}-1-u\right)p_0=1\]
+quindi ricaviamo \(p_0\) nel caso di \(M/M/3\)
+\[
+    p_0 = \frac{1}{1+3u+\frac{9}{2}\left(\frac{1}{1-u}-1-u\right)}
+\]
+all'aumentare il numero di macchine la sommatoria parte da numeri più alti e si sposta verso destra, noto \(p_0\) possiamo trovare \(WIP_s\):
+\begin{align*}
+    WIP_s &= \sum_{n = 0}^{\infty} np_n = \bcancel{0\times p_0} + 1\times p_1+ \sum_{n = 2}^{\infty}n\frac{9}{2}u^np_0 =\\
+                                        &=3up_0 + \frac{9}{2}p_0\sum_{n = 2}^{\infty} nu^n =\\
+                                        &=\frac{9}{2}p_0\left(\sum_{n = 0}^{\infty}nu^n - 0\times u^0 - 1\times u^1\right)=\\
+                                        &= \frac{9}{2}p_0\left(\frac{1}{1-u}-u\right)
+\end{align*}
+e tutti gli indicatori di performance:
+\begin{align*}
+    &WIP_s^{M/M/3} = \frac{3^2}{2}p_0\left(\frac{1}{1-u}-u\right)\\
+    &TH_s^{M/M/m} = \lambda \\
+    &CT_s^{M/M/m} = \frac{WIP_s}{\lambda}\\
+    &CT_q^{M/M/m} = CT_s - \frac{E[T_s]}{\bcancel{m}}\\
+    &WIP_s = CT_s\lambda\\
+    &WIP_p = WIP_{processo}=E[T_s]\lambda\\
+    &WIP_q^{M/M/m} = CT_q\lambda\\
+    &u_{stazione}=\frac{\lambda}{m \times \mu}\\
+    &u_{macchina}=m\times u_{stazione} = \cancel{m}\frac{\lambda}{\cancel{m} \times \mu} = \frac{\lambda}{\mu}\\
+\end{align*}
+
+\begin{conditions*}
+    TH_s = \lambda & Non importa se ho 3 serventi, questa condizione vale perchè \(u<1\)\\
+    CT_q = CT_s - \frac{E[T_s]}{\bcancel{m}} & dato che è il tempo medio \(m\) è riferito ad un job e non gli importa se ci sono \(m\) macchine in parallelo, il tempo medio di elaborazione per quel job sará sempre lo stesso. É come essere in coda ad una cassa del supermercato, quando la cassa sta controllando i prodotti di una persona, non importa se ci sono 2 o 100 casse, sempre lo stesso tempo impiegherá per la stessa persona. Attenzine quindi alle misure di performance legate alla \(WK\) e le misure legate al singolo job. Se si considera il tempo della spesa allora il tempo dipende da \(m\), nel caso invece del tempo di servizio del singolo job allora non può che essere il tempo di servizio del job stesso.\\
+    WIP_{processo} & nel caso di M/M/1 il \(WIP_{processo}\) valeva \(u\), in questo caso no
+\end{conditions*}
+
+\subsection{M/M/m con serventi diversi tra loro}
+
+Le cose cambiano se i serventi non sono identici, in questo caso la notazione rimane la stessa ma va specificato che si tratta di serventi differenti
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/10.jpg}
+    \caption{M/M/m con un servente lento e uno veloce}
+\end{figure}
+
+\begin{conditions*}
+    \lambda & tasso medio di arrivo\\
+    \frac{1}{\lambda} + E[T_a] & tempo di interarrivo medio\\
+    \gamma & tasso medio di servizio macchina lenta\\
+    \frac{1}{\gamma} = E[T_{s_L}] & tempo medio di servizio macchina lenta\\
+    \mu & tasso medio di servizio macchina veloce\\
+    \frac{1}{\mu} = E[T_{s_V}] & tempo medio di servizio macchina veloce
+\end{conditions*}
+si suponga M/M/2/5, ovvero un sistema con 2 serventi limitato a 5 job
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/11.jpg}
+\end{figure}
+Si da sempre la preferenza a quello veloce, quindi se sono entrambi liberi si va nella macchina veloce. Se entrambi i serventi sono attivi il tasso medio della stazione sará \(\gamma + \mu\), il grafo degli stati sará:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/12.jpg}
+\end{figure}
+si procede con i tagli per trovare le probabilitá incognite
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{images/chapter2/13.jpg}
+\end{figure}
+si ricorda che \textit{FRECCE sx\(\rightarrow\)dx = FRECCE dx\(\rightarrow\)sx} di conseguenza:
+
+\[
+    \begin{cases}
+        \textit{(Taglio 1)}  \lambda p_0 = \mu p_{1_V} + \gamma p_{1_L}  \rightarrow p_2 = \frac{\gamma p_{1_L} - \lambda p_{1_V}}{\gamma} = p_{1_L} - \frac{\lambda}{\gamma}p_{1_V}\\
+
+        \textit{(Taglio 2)}  \lambda p_{1_v} = \gamma p_2 + \gamma p_{1_L}  \rightarrow \frac{\lambda(p_{1_L} + p_{1_V})}{\gamma + \mu} \rightarrow  p_{1_L} - \frac{\lambda}{\gamma}p_{1_V}=\frac{\lambda(p_{1_L}+p_{1_V})}{\gamma+\mu} \rightarrow p_{1_V} = \frac{\gamma^2+\gamma\lambda + \gamma\mu}{\lambda\mu}p_{1_L}\\
+
+        \textit{(Taglio 3)} \lambda p_{1_L} + \lambda p_{1_V} = \gamma p_2 + \mu p_2 \\
+
+        \textit{(Taglio 4)} \lambda p_2 = (\gamma + \mu)p_3 \\
+
+        \textit{(Taglio 5)} \lambda p_3 = (\gamma + \mu)p_4 \\
+
+        \textit{(Taglio 6)} \lambda p_4 = (\gamma + \mu)p_5 \\
+
+        \text{(normalizzazione)} \sum_n p_n = 1 
+    \end{cases}
+\]
+Risolvendo si ottengono le probabilitá:
+
+\begin{align*}
+    &p_2 = \frac{\gamma+\lambda}{\mu}p_{1_L}=\underbrace{\frac{\gamma + \lambda}{\mu}\times\left(\frac{\lambda^2}{\gamma^2+2\gamma\lambda+\gamma\mu}\right)p_0}_{\text{da sostituire in \(p_3\), \(p_4\), \(p_5\)}}\\
+    &p_{1_L} = \left(\frac{\lambda^2}{\gamma^2+2\gamma\lambda+\gamma\mu}\right)p_0\\
+    &p_{1_V} = \frac{\gamma^2+\gamma\lambda|mu\gamma}{\lambda\mu}\times\left(\frac{\lambda^2}{\gamma^2+2\gamma\lambda+\gamma\mu}\right)p_0 = \frac{(\gamma+\lambda+\mu)\lambda}{\mu(\gamma+2\lambda+\mu)}p_0
+\end{align*}
+ora l'equazione di normalizzazione
+\begin{align*}
+    p_0 &+ \\
+    &+ \frac{\lambda^2}{\gamma^2+2\gamma\lambda+\gamma\mu}p_0 + \\
+    &+ \frac{(\gamma+\lambda+\mu)\lambda}{\mu(\gamma+2\lambda+\mu)}p_0 + \\
+    &+ \frac{\gamma + \lambda}{\mu}\left(\frac{\lambda^2}{\gamma^2+2\gamma\lambda+\gamma\mu}\right)p_0 + \\
+    &+ \sum_{n=5}^{5}\left[\left(\frac{\lambda}{\gamma+\mu}\right)^{n-2}\left(\frac{\gamma+\lambda}{\mu}\right)\left(\frac{\lambda^2}{\gamma^2+2\gamma\lambda+\gamma\mu}\right)p_0\right]=1
+\end{align*}
+
+\subsubsection{Esempio M/M/2/4 con serventi L e V}
+
+\(\lambda=3 \frac{job}{giorno}\), buffer limitato pari a 2, \(E[T_{s_L}]=12h\), \(E[T_{s_V}]=8h\), di conseguenza si ha \(\gamma=\frac{1}{12}\frac{job}{h}=2 \frac{job}{giorno}\) e \(\mu=\frac{1}{8}\frac{job}{h}=3\frac{job}{giorno}\)
+
+\[
+  \begin{cases}
+      3p_0 = 3p_{1_V} + 2p_{1_L} \\
+      3p_{1_V} = 2p_2 + 2p_{1_L} \\
+      3(p_{1_V}+p_{1_L}) = (3+2)p_2\\
+      3p_2 = (3+2)p_3\\
+      3p_3 = (3+2)p_4\\
+      3p_4 = (3+2)p_5\\
+      p_0 + p_{1_V}+p_{1_L}+p_2+p_3+p_4=1
+  \end{cases}  
+\]
+si trova \(p_0\):
+\[
+  p_0=\frac{1}{1 + \frac{9}{4+12+6}+\frac{24}{33}+\frac{5}{3}\times\frac{9}{4+12+6}\left[1+\frac{3}{5}+\left(\frac{3}{5}\right)^2\right]}  
+\]
+si eseguono i calcoli e si trovano le probabilitá:
+\[
+\begin{cases}
+    p_0=0.288\\
+    p_{1_V}=0.118\\
+    p_{1_L}=0.209\\
+    p_2=0.196\\
+    p_3=0.118\\
+    p_4=0.071\\
+\end{cases}    
+\]
+si trovano gli indicatori di performance:
+\begin{align*}
+    WIP_s &=1.356job=0\times 0.288+1\times(0.209+0.118)+2\times 0.196+3\times 0.118+4\times 0.071\\
+    WIP_q &=1\times \underbrace{0.118}_{p_3} + 2\times \underbrace{0.071}_{p_4} = 0.259 \text{Negli altri casi non c'è coda}\\
+    TH_s &= \lambda_e = \lambda(1-p_4) = 3(1-0.071)=1.787 \frac{job}{giorno}\\
+    CT_s &= \frac{WIP_s}{\lambda_e}= \frac{1.356}{2.787}=0.486giorni\\
+    CT_1 &= \frac{WIP_q}{\lambda_e} = \frac{0.259}{2.787}=0.093 giorni\\
+    E[T_s] &= CT_s-CT_q=0.486-0.093=0.396 giorni \cong 9.4 h
+\end{align*}
+quindi la macchina veloce processo più job di quella lenta, fare una semplice media non sarebbe corretto, occorre fare una media temporale considerando 0 se non ci sono macchine attive, 1 se è attiva o la macchina Veloce o la macchina Lenta, 2 se sono entrambe attive:
+\[
+  \text{Numero medio serventi attivi} = 0\times p_0 + 1(p_{1_V}+p_{1_L}) + 2(p_2+p_3+p_4) = 1.097  
+\]
+per trovare l'utilizzo occorre considerare \(m=\frac{\text{numero medio di serventi attivi}}{numero totale di serventi}=0.5485\) utilizzando così la \% di serventi attivi
+\begin{conditions*}
+    p_0 & probabilitá che il sistema sia IDLE\\
+    p_4 & probabilita che il sistema sia bloccato
+\end{conditions*}
+Conoscendo le probabilitá si conoscono quindi tutte le misure di performance di cui si necessita
